@@ -1,0 +1,6 @@
+# gitignore whitelist pattern from https://jasonstitt.com/gitignore-whitelisting-patterns
+*
+!*/
+!.gitignore
+!updateMoni.sh
+!/README.md
