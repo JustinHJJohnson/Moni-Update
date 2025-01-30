@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 use_sed="true"
-server="${1}"
-backup_dir="${2}"
+server="${1%/}"
+backup_dir="${2%/}"
 dirs_to_update=("manifest.json" "config-overrides" "config" "defaultconfigs" "kubejs" "mods")
 
 if
@@ -85,11 +85,16 @@ echo "Updating files"
 unzip -q /tmp/new-moni.zip -d /tmp/new-moni
 
 cd "${server}"
-rm -r "${dirs_to_update[@]}"
+for file in "${dirs_to_update[@]}"
+do
+  rm -r "${file}"
+done
 
-cd /tmp/new-moni
-mv overrides/* ./
-mv "${dirs_to_update[@]}" "${server}/"
+mv /tmp/new-moni/overrides/* /tmp/new-moni/
+for file in "${dirs_to_update[@]}"
+do
+  mv "/tmp/new-moni/${file}" ./
+done
 
 echo "Updating finished"
 echo
